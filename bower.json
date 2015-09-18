@@ -1,6 +1,11 @@
 {
   "name": "ai-logger",
-  "version": "0.9.0",
+  "description": "Configurable logging provider for angular applications",
+  "keywords": [
+    "angular",
+    "aquatic iformatics",
+    "logger"
+  ],
   "dependencies": {
     "angular": "~1.4.1",
     "lodash": "~3.10.1",
@@ -8,5 +13,17 @@
   },
   "devDependencies": {
     "angular-mocks": "~1.4.1"
-  }
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AquaticInformatics/angular-logger.git"
+  },
+  "ignore": [
+      "**/.*",
+      "node_modules",
+      "bower_components",
+      "temp",
+      "source"
+  ]
 }
