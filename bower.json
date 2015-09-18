@@ -6,13 +6,14 @@
     "aquatic iformatics",
     "logger"
   ],
+  "main": ["./dist/ai-logger.js"],
   "dependencies": {
-    "angular": "~1.4.1",
-    "lodash": "~3.10.1",
-    "underscore.string": "~3.2.1"
+    "angular": "^1.4.1",
+    "lodash": "^3.10.1",
+    "underscore.string": "^3.2.1"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.1"
+    "angular-mocks": "^1.4.1"
   },
   "license": "Apache-2.0",
   "repository": {
@@ -20,7 +21,8 @@
     "url": "https://github.com/AquaticInformatics/angular-logger.git"
   },
   "ignore": [
-      "**/.*",
+      "*.*",
+      "test",
       "node_modules",
       "bower_components",
       "temp",
