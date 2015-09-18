@@ -1,5 +1,3 @@
 bower_components
-dist
 temp
 node_modules
-dev_config_overrides.json
