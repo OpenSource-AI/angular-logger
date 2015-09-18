@@ -1,0 +1,47 @@
+{
+  "name": "angular-logger",
+  "version": "0.9.0",
+  "description": "Custom logger service for angular applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp karma"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AquaticInformatics/angular-logger.git"
+  },
+  "keywords": [
+    "AquaticInformatics",
+    "angular",
+    "logging",
+    "logger",
+    "service"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AquaticInformatics/angular-logger/issues"
+  },
+  "homepage": "https://github.com/AquaticInformatics/angular-logger",
+  "devDependencies": {
+    "deep-extend": "~0.4.0",
+    "del": "~2.0.1",
+    "gulp": "~3.9.0",
+    "gulp-istanbul-enforcer": "~1.0.3",
+    "gulp-jscs": "~2.0.0",
+    "gulp-jscs-stylish": "~1.1.2",
+    "gulp-jshint": "~1.11.2",
+    "gulp-karma": "~0.0.4",
+    "gulp-ng-annotate": "~1.1.0",
+    "gulp-rename": "~1.2.2",
+    "gulp-uglify": "~1.4.0",
+    "gulp-util": "~3.0.6",
+    "jasmine-core": "~2.3.4",
+    "jshint-stylish": "~2.0.1",
+    "karma": "~0.13.9",
+    "karma-coverage": "~0.5.1",
+    "karma-jasmine": "~0.3.6",
+    "karma-phantomjs-launcher": "~0.2.1",
+    "phantomjs": "~1.9.18"
+  }
+}

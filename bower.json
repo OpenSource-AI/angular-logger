@@ -1,0 +1,12 @@
+{
+  "name": "ai-logger",
+  "version": "0.9.0",
+  "dependencies": {
+    "angular": "~1.4.1",
+    "lodash": "~3.10.1",
+    "underscore.string": "~3.2.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.1"
+  }
+}
