@@ -54,7 +54,7 @@
 
                 this.getLogger = function(loggerName) {
                     var newLoggerName = String(loggerName);
-                    if(_.isString(loggerConfig.loggerName) && loggerConfig.loggerName.length > 0) {
+                    if(loggerConfig.loggerName.length > 0) {
                         newLoggerName = loggerConfig.loggerName + '.' + newLoggerName;
                     }
                     return new Logger(_.assign({}, loggerConfig, {loggerName: newLoggerName}));
@@ -96,44 +96,24 @@
 
         return {
             setAppName: function(name) {
-                if(!_.isString(name)) {
-                    throw new Error('Invalid Argument: expected application name to be a string');
-                }
-                appName = name;
+                appName = String(name);
             },
             setOutputWritter: function(writter) {
-                if(_.any(logFunctionNames, function(logLevelName) {
-                    return _.isUndefined(writter[logLevelName]);
-                })) {
-                    throw new Error('Invalid argument: writter must have following methods; error, warn, info, debug');
-                }
                 outputWritter = writter;
             },
             setTranslator: function(translatorFunction) {
-                if(!_.isFunction(translatorFunction)) {
-                    throw new Error('Invalid argument: expected translator to be a function');
-                }
                 translator = translatorFunction;
             },
             setStringFormatter: function(stringFormatterFunction) {
-                if(!_.isFunction(stringFormatterFunction)) {
-                    throw new Error('Invalid argument: expected string formatter to be a function');
-                }
                 stringFormatter = stringFormatterFunction;
             },
             setLogLevel: function(level) {
                 logLevel = toValidLogLevel(level);
             },
             setTimeStampGenerator: function(timeStampGeneratorFunction) {
-                if(!_.isFunction(timeStampGeneratorFunction)) {
-                    throw new Error('Invalid Argument: expected time stamp generator to be a function');
-                }
                 timeStampGenerator = timeStampGeneratorFunction;
             },
             setMessageFormat: function(formattingPattern) {
-                if(!_.isString(formattingPattern)) {
-                    throw new Error('Invalid Argument: expected formatting pattern to be a string');
-                }
                 messageFormat = formattingPattern;
             },
             $get: function($log, $window) {
