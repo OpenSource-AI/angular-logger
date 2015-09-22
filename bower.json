@@ -1,5 +1,5 @@
 {
-  "name": "ai-logger",
+  "name": "angular-ai-logger",
   "description": "Configurable logging provider for angular applications",
   "keywords": [
     "angular",
