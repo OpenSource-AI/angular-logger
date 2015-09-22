@@ -21,7 +21,10 @@
     "url": "https://github.com/AquaticInformatics/angular-logger.git"
   },
   "ignore": [
-      "*.js",
+      "config.js",
+      "gulpfile.js",
+      "karma.conf.js",
+      "dev_config_overrides.json",
       "*.md",
       ".jshintrc",
       ".jscsrc",
