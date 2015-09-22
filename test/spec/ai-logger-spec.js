@@ -113,8 +113,50 @@ describe('LoggingService', function() {
 
     describe('with partial configuration', function() {
         var logger;
+        var log;
 
         beforeEach(module('ai.public.logger', function(aiLoggerProvider) {
+            aiLoggerProvider.setStringFormatter(mockFormatter);
+            aiLoggerProvider.setMessageFormat(testMessageFormat);
+            aiLoggerProvider.setLogLevel('trace');
+        }));
+
+        beforeEach(inject(function(aiLogger, $log) {
+            logger = aiLogger;
+            log = $log;
+            spyOn(log, 'info');
+        }));
+
+        it('should use default unknownApp name', function(){
+            logger.info('bam');
+
+            var loggedMessage = log.info.calls.mostRecent().args[0];
+
+            expect(_.includes(loggedMessage, 'unknownApp')).toBe(true);
+        });
+
+        it('should use default noop translator', function(){
+            logger.info('bim');
+
+            var loggedMessage = log.info.calls.mostRecent().args[0];
+
+            expect(_.includes(loggedMessage, 'unknownApp bim')).toBe(true);
+        });
+
+        it('should use default timeStampGenerator', function(){
+            logger.info('baz');
+
+            var loggedMessage = log.info.calls.mostRecent().args[0];
+
+            expect(_.includes(loggedMessage, '(UTC)')).toBe(true);
+        });
+    });
+
+    describe('with partial configuration without empty app name', function() {
+        var logger;
+
+        beforeEach(module('ai.public.logger', function(aiLoggerProvider) {
+            aiLoggerProvider.setAppName('');
             aiLoggerProvider.setOutputWritter(mockLog);
             aiLoggerProvider.setStringFormatter(mockFormatter);
             aiLoggerProvider.setMessageFormat(testMessageFormat);
@@ -126,28 +168,53 @@ describe('LoggingService', function() {
             spyOn(mockLog, 'info');
         }));
 
-        it('should use default unknownApp name', function(){
+        it('should not include app name in the log message', function(){
             logger.info('bam');
 
             var loggedMessage = mockLog.info.calls.mostRecent().args[0];
 
-            expect(_.includes(loggedMessage, 'unknownApp')).toBe(true);
+            expect(_.includes(loggedMessage, 'unknownApp')).toBe(false);
         });
 
-        it('should use default noop translator', function(){
-            logger.info('bim');
+        describe('getLogger', function() {
+            it('should use loggger name instead of appName', function() {
+                var foobarLogger = logger.getLogger('foobar');
+
+                foobarLogger.info('zam');
+                var loggedMessage = mockLog.info.calls.mostRecent().args[0];
+
+                expect(_.includes(loggedMessage, 'INFO foobar zam')).toBe(true);
+            });
+        });
+    });
+
+    describe('without custom stringFormatter', function() {
+        var originalWidowSprintf;
+
+        beforeEach(function() {
+            originalWidowSprintf = window.s.sprintf;
+            window.s.sprintf = function() {
+                return _.map(arguments).join(' ');
+            };
+
+            module('ai.public.logger', function(aiLoggerProvider) {
+                aiLoggerProvider.setOutputWritter(mockLog);
+                aiLoggerProvider.setMessageFormat(testMessageFormat);
+                aiLoggerProvider.setLogLevel('trace');
+            });
+        });
+
+        afterEach(function() {
+            window.s.sprintf = originalWidowSprintf;
+        });
+
+        it('should use $window.s.sprintf by default', inject(function(aiLogger) {
+            spyOn(mockLog, 'info');
+            aiLogger.info('foobar');
 
             var loggedMessage = mockLog.info.calls.mostRecent().args[0];
-
-            expect(_.includes(loggedMessage, 'unknownApp bim')).toBe(true);
-        });
-
-        it('should use default timeStampGenerator', function(){
-            logger.info('baz');
-
-            var loggedMessage = mockLog.info.calls.mostRecent().args[0];
-
-            expect(_.includes(loggedMessage, '(UTC)')).toBe(true);
-        });
+            console.log('m:', loggedMessage);
+            expect(_.includes(loggedMessage, 'INFO unknownApp foobar')).toBe(true);
+        }));
     });
 });

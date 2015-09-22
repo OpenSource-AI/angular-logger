@@ -1,6 +1,6 @@
 {
   "name": "angular-logger",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Custom logger service for angular applications",
   "main": "index.js",
   "scripts": {

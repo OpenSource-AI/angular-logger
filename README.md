@@ -11,7 +11,7 @@ This module uses lodash [Lo-Dash](https://github.com/lodash/lodash) and that is 
     bower install ai-logger
 
 ### Building from sour code
-    git clone https://github.com/AquaticInformatics/angular-logger.git    
+    git clone https://github.com/AquaticInformatics/angular-logger.git
     npm install
     gulp build
 
@@ -35,7 +35,7 @@ Since this is a provider you can configure it once for the whole application:
 angular.module('someModule', [])
     .config(function(aiLoggerProvider) {
         aiLoggerProvider.setAppName('aiLoggerDemoApp');
-        aiLoggerProvider.setLogLevel('trace');        
+        aiLoggerProvider.setLogLevel('trace');
     })
     .controller(function($scope, aiLogger) {
        var logger = aiLogger.getLogger('someModule');
@@ -86,7 +86,16 @@ Returns another instance of a logger with a new name (new name is formed by appe
 Each instance of a logger can be configured independently at which minimum level the messages will be logged.
 
 #### error
+Logs the formatted message to output writer
+
 #### warn
+Logs the formatted message to output writer if log level is warn or greater
+
 #### info
+Logs the formatted message to output writer if log level is info or greater
+
 #### debug
+Logs the formatted message to output writer if log level is debug or greater
+
 #### trace
+Logs the formatted message to output writer if log level is trace
