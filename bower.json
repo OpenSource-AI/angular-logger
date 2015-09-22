@@ -21,9 +21,12 @@
     "url": "https://github.com/AquaticInformatics/angular-logger.git"
   },
   "ignore": [
-      "**/.*",
       "*.js",
       "*.md",
+      ".jshintrc",
+      ".jscsrc",
+      ".gitignore",
+      ".editorconfig",
       "package.json",
       "test",
       "node_modules",
