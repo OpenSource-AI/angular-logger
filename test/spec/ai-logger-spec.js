@@ -213,7 +213,6 @@ describe('LoggingService', function() {
             aiLogger.info('foobar');
 
             var loggedMessage = mockLog.info.calls.mostRecent().args[0];
-            console.log('m:', loggedMessage);
             expect(_.includes(loggedMessage, 'INFO unknownApp foobar')).toBe(true);
         }));
     });

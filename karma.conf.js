@@ -13,7 +13,7 @@ module.exports = function(config) {
 
         files : [
           'bower_components/lodash/lodash.js',
-          'bower_components/underscore.string/dist/underscore.string.js',          
+          'bower_components/underscore.string/dist/underscore.string.js',
           'bower_components/angular/angular.js',
           'bower_components/angular-mocks/angular-mocks.js',
           'source/*.js',
@@ -32,6 +32,7 @@ module.exports = function(config) {
             reporters:[
                 {type: 'html', dir: 'temp/coverage/'},
                 {type: 'json', dir: 'temp/coverage/'},
+                {type: 'lcov', dir: 'temp/coverage/'},
                 {type: 'text-summary', dir: 'temp/coverage/'}
             ]
         },

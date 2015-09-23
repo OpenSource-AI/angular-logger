@@ -1,6 +1,6 @@
 {
   "name": "angular-ai-logger",
-  "description": "Configurable logging provider for angular applications",
+  "description": "Customizable logger service for angular applications",
   "keywords": [
     "angular",
     "aquatic iformatics",
