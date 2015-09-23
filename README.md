@@ -1,6 +1,9 @@
 # AI Angular logger
+[![travis build](https://img.shields.io/travis/AquaticInformatics/angular-logger.svg)](https://travis-ci.org/AquaticInformatics/angular-logger)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Apache license](http://img.shields.io/badge/license-APACHE2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-Angular $log service is very basic and we needed something a bit more configurable that can be used by many applications.  It provides a time stamp, visually aligns messages, has convenient logger name differentiation and provides support for localizing messages.
+A customizable angular logging service that a nice time stamp, visually aligns messages, has convenient logger name differentiation and provides support for localizing messages.
 
 ## Dependencies
 This module uses lodash [Lo-Dash](https://github.com/lodash/lodash) and that is the only required dependency.  The module also uses [underscore.string](https://github.com/epeli/underscore.string) but, you can provide your own string formatting function and not even load this one.
