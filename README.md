@@ -12,7 +12,7 @@ This module uses lodash [Lo-Dash](https://github.com/lodash/lodash) and that is 
 ## Usage
 
 ### Install from brower
-    bower install ai-logger
+    bower install angular-ai-logger
 
 ### Building from sour code
     git clone https://github.com/AquaticInformatics/angular-logger.git
