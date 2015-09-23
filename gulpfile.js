@@ -31,10 +31,10 @@ gulp.task('karma', function() {
         })
         .pipe(coverageEnforcer({
             thresholds : {
-                statements: 89,
-                branches: 73,
+                statements: 100,
+                branches: 100,
                 functions: 100,
-                lines: 89
+                lines: 100
             },
             coverageDirectory : 'coverage',
             rootDirectory : 'temp'

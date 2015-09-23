@@ -1,10 +1,12 @@
 {
   "name": "angular-logger",
-  "version": "0.9.3",
-  "description": "Custom logger service for angular applications",
+  "version": "0.0.0-semantically-released",
+  "description": "Customizable logger service for angular applications",
   "main": "index.js",
   "scripts": {
-    "test": "gulp karma"
+    "commit": "git-cz",
+    "test": "gulp karma",
+    "semantic-release": "semantic-release pre && semantic-release post"
   },
   "repository": {
     "type": "git",
@@ -18,12 +20,14 @@
     "service"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/AquaticInformatics/angular-logger/issues"
   },
   "homepage": "https://github.com/AquaticInformatics/angular-logger",
   "devDependencies": {
+    "commitizen": "^1.0.4",
+    "cz-conventional-changelog": "git://github.com/commitizen/cz-conventional-changelog.git#bd40b525d551f81877167629809a08452de4995d",
     "deep-extend": "~0.4.0",
     "del": "~2.0.1",
     "gulp": "~3.9.0",
@@ -42,6 +46,10 @@
     "karma-coverage": "~0.5.1",
     "karma-jasmine": "~0.3.6",
     "karma-phantomjs-launcher": "~0.2.1",
-    "phantomjs": "~1.9.18"
+    "phantomjs": "~1.9.18",
+    "semantic-release": "^4.3.5"
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
   }
 }
