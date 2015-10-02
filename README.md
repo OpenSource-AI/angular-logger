@@ -23,8 +23,8 @@ This module uses lodash [Lo-Dash](https://github.com/lodash/lodash) and that is 
 ### Example
 ```javascript
 angular.module('someModule', [])
-  .controller(function($scope, aiLogger) {
-     var logger = aiLogger.getLogger('someModule');
+  .controller(function($scope, AiLogger) {
+     var logger = AiLogger.getLogger('someModule');
 
      logger.info('This is an %s message', 'info');
      logger.debug('This one is %s message %d', 'debug', 2);
@@ -37,12 +37,12 @@ Since this is a provider you can configure it once for the whole application:
 
 ```javascript
 angular.module('someModule', [])
-    .config(function(aiLoggerProvider) {
-        aiLoggerProvider.setAppName('aiLoggerDemoApp');
-        aiLoggerProvider.setLogLevel('trace');
+    .config(function(AiLoggerProvider) {
+        AiLoggerProvider.setAppName('aiLoggerDemoApp');
+        AiLoggerProvider.setLogLevel('trace');
     })
-    .controller(function($scope, aiLogger) {
-       var logger = aiLogger.getLogger('someModule');
+    .controller(function($scope, AiLogger) {
+       var logger = AiLogger.getLogger('someModule');
 
        logger.info('This is an %s message', 'info');
        logger.debug('This one is %s message %d', 'debug', 2);
@@ -54,10 +54,6 @@ angular.module('someModule', [])
 
 #### setAppName
 Configures the top level logger name.  If you don't provide one 'unknownApp' will be used.
-
-#### setOutputWritter
-Lets you configure whether the logger will log using $log or some other logger (like window.console).  
-Any custom logger object has to have these function: error, warn, info, debug and trace.
 
 #### setTranslator
 The built-in translator just returns the given value, if you want translations you have to specify a function that will do that.  The built-in translator is applied to every parameter passed to logging functions.
