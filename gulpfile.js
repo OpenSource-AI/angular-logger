@@ -13,6 +13,8 @@ var jscsStylish = require('gulp-jscs-stylish');
 var ngAnnotate = require('gulp-ng-annotate');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+var header = require('gulp-header');
+var fs = require('fs');
 
 gulp.task('clean', function(deleteDone) {
     del.sync([
@@ -51,10 +53,12 @@ gulp.task('compile', ['clean', 'karma'], function() {
        .pipe(jscsStylish.combineWithHintResults())
        .pipe(jshint.reporter(jshintStylish))
        .pipe(config.build.failOnStyleErrors ?  jshint.reporter('fail') : gulpUtil.noop())
+       .pipe(header(fs.readFileSync('license_prefix.txt', 'utf8')))
        .pipe(gulp.dest('dist'))
        .pipe(ngAnnotate())
        .pipe(uglify())
        .pipe(rename('ai-logger.min.js'))
+       .pipe(header(fs.readFileSync('license_prefix.txt', 'utf8')))
        .pipe(gulp.dest('dist'));
 });
 
