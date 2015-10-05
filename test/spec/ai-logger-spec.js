@@ -48,7 +48,7 @@ describe('LoggingService', function() {
             {functionName: 'warn', level: 'WARNING', logFunction: 'warn'},
             {functionName: 'info', level: 'INFO', logFunction: 'info'},
             {functionName: 'debug', level: 'DEBUG', logFunction: 'debug'},
-            {functionName: 'trace', level: 'TRACE', logFunction: 'debug'}
+            {functionName: 'trace', level: 'TRACE', logFunction: 'trace'}
         ].forEach(function(testData) {
             describe(testData.functionName, function() {
                 it('should output formatted string', function() {

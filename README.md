@@ -4,10 +4,10 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Apache license](http://img.shields.io/badge/license-APACHE2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-A customizable angular logging service that a nice time stamp, visually aligns messages, has convenient logger name differentiation and provides support for localizing messages.
+A customizable angular logging service that a nice time stamp, visually aligns messages, has convenient logger name differentiation and provides support for localizing messages and it can post messages in batches to a server API.
 
 ## Dependencies
-This module uses lodash [Lo-Dash](https://github.com/lodash/lodash) and that is the only required dependency.  The module also uses [underscore.string](https://github.com/epeli/underscore.string) but, you can provide your own string formatting function and not even load this one.
+This module uses lodash [Lo-Dash](https://github.com/lodash/lodash) and that is the only required dependency.  The module also uses [underscore.string](https://github.com/epeli/underscore.string) but, you can provide your own string formatting function and not load that helper library.
 
 ## Usage
 
@@ -22,7 +22,7 @@ This module uses lodash [Lo-Dash](https://github.com/lodash/lodash) and that is 
 
 ### Example
 ```javascript
-angular.module('someModule', [])
+angular.module('someModule', ['ai.public.logger'])
   .controller(function($scope, AiLogger) {
      var logger = AiLogger.getLogger('someModule');
 
@@ -31,12 +31,12 @@ angular.module('someModule', [])
   });
 ```
 
-## configuration
+## Configuration
 
 Since this is a provider you can configure it once for the whole application:
 
 ```javascript
-angular.module('someModule', [])
+angular.module('someModule', ['ai.public.logger'])
     .config(function(AiLoggerProvider) {
         AiLoggerProvider.setAppName('aiLoggerDemoApp');
         AiLoggerProvider.setLogLevel('trace');
@@ -49,6 +49,13 @@ angular.module('someModule', [])
     });
 ```
 
+## Configuration with support for loggly
+
+Simply install [angular-loggly-logger](https://github.com/ajbrown/angular-loggly-logger) and configure it.  That is it.
+
+## Configuration for batch posting to a server
+
+Follow these [instructions](https://github.com/AquaticInformatics/angular-logger/blob/master/server-configuration.md)
 
 ### Supported Configuration Functions
 

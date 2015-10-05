@@ -77,9 +77,12 @@
                             translateMessage(arguments)
                         );
 
-                        var outputFunctionName = (logLevel === loggerLogLevels.trace) ?
-                            logFunctionNames[loggerLogLevels.debug] :
-                            logFunctionNames[logLevel];
+                        var outputFunctionName = logFunctionNames[logLevel];
+                        if(logLevel === loggerLogLevels.trace) {
+                            outputFunctionName = _.isUndefined(config.outputWritter[outputFunctionName]) ?
+                                logFunctionNames[loggerLogLevels.debug] :
+                                logFunctionNames[logLevel];
+                        }
 
                         config.outputWritter[outputFunctionName](fullMessage);
                     };
