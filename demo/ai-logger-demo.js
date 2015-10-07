@@ -7,6 +7,7 @@
         .config(function(AiLoggerProvider, AiServerLoggerProvider) {
             AiServerLoggerProvider.setServerPostEndPoint('http://localhost:3000/logs');
             AiServerLoggerProvider.setQueueSize(10);
+            AiServerLoggerProvider.setPostToServerDelay(5000);
 
             AiLoggerProvider.setAppName('aiLoggerDemoApp');
             AiLoggerProvider.setLogLevel('trace');
@@ -14,7 +15,7 @@
         });
 
     angular.module('ai.public.logger.demo')
-        .controller('aiLoggerDemoController', function($scope, $log, AiLogger) {
+            .controller('aiLoggerDemoController', function($scope, $log, AiLogger) {
             AiLogger.error('Error sent to application logger');
             AiLogger.warn('Warning sent to application logger');
             AiLogger.info('Info sent to application logger');
@@ -29,6 +30,7 @@
                 functionLogger.info('Hi from %s which was called with %d parameters.', 'uberFunction', 2);
             };
 
-            uberFunction();        
+            uberFunction();
+            $log.info('foobar', {foo:'bar'});
         });
 }());

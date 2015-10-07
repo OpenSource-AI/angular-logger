@@ -12,10 +12,13 @@
 
                 var enhanceLoggingFunction = function(loggingFunction, severity) {
                     return function() {
-                        var args = [].slice.call(arguments);
-                        loggingFunction.apply(null, args);
+                        var callArguments = _.toArray(arguments);
+                        loggingFunction.apply(null, callArguments);
 
-                        var message = args.length === 1 ? _.first(args) : JSON.stringify(args);
+                        var message = callArguments.length === 1 ?
+                            _.first(callArguments) :
+                            JSON.stringify(callArguments);
+
                         logger.send(message, severity);
                     };
                 };
@@ -46,37 +49,40 @@
                 function ServerLogger(loggerConfig) {
                     var config = loggerConfig;
                     var queue = [];
-                    var timeOutId;
+                    var timeoutId;
                     var $http;
 
                     this.send = function() {
-                        if(_.isUndefined(config.serverPostEndPoint)) { return; }
+                        if(_.isUndefined(config.serverPostEndPoint)) {
+                            console.log('Cannot send log messages to unknown server end point.  ' +
+                                'Check AiServerLoggerProvider configuration.');
+                            return;
+                        }
                         var dto = transformParameters.apply(null, arguments);
                         queue.push(dto);
                         processQueue();
                     };
 
                     var processQueue = function() {
-                        if(angular.isDefined(timeOutId)) {
+                        if(angular.isDefined(timeoutId)) {
                             if(queue.length >= config.queueSize) {
-                                clearTimeout(timeOutId);
-                                var payload = _.take(queue, config.queueSize);
-                                queue = _.slice(queue, config.queueSize);
-                                postToServer(payload);
+                                clearTimeout(timeoutId);
+                                postToServer();
                             }
                         }
 
-                        timeOutId = setTimeout(function() {
-                            timeOutId = undefined;
+                        timeoutId = setTimeout(function() {
+                            timeoutId = undefined;
                             if(queue.length === 0) { return ; }
 
-                            var payload = _.take(queue, config.queueSize);
-                            queue = _.slice(queue, config.queueSize);
-                            postToServer(payload);
+                            postToServer();
                         }, config.postToServerDelay);
                     };
 
-                    var postToServer = function(payload) {
+                    var postToServer = function() {
+                        var payload = _.take(queue, config.queueSize);
+                        queue = _.slice(queue, config.queueSize);
+
                         if(_.isUndefined($http)) {
                             $http = config.injector.get('$http');
                         }
