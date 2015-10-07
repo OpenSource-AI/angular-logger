@@ -19,21 +19,24 @@ describe('LoggingService', function() {
             '%s %s %s %s t:%s', testMessageFormat, testTimeStamp, logLevel, loggerName, message);
     };
 
+    beforeEach(module(function($provide) {
+        $provide.value('$log', mockLog);
+    }));
+
     describe('with full configuration', function() {
         var logger;
 
-        beforeEach(module('ai.public.logger', function(aiLoggerProvider) {
-            aiLoggerProvider.setAppName(testApp);
-            aiLoggerProvider.setOutputWritter(mockLog);
-            aiLoggerProvider.setTranslator(mockTranslator);
-            aiLoggerProvider.setStringFormatter(mockFormatter);
-            aiLoggerProvider.setLogLevel('trace');
-            aiLoggerProvider.setTimeStampGenerator(mockTimeStampGenerator);
-            aiLoggerProvider.setMessageFormat(testMessageFormat);
+        beforeEach(module('ai.public.logger', function(AiLoggerProvider) {
+            AiLoggerProvider.setAppName(testApp);
+            AiLoggerProvider.setTranslator(mockTranslator);
+            AiLoggerProvider.setStringFormatter(mockFormatter);
+            AiLoggerProvider.setLogLevel('trace');
+            AiLoggerProvider.setTimeStampGenerator(mockTimeStampGenerator);
+            AiLoggerProvider.setMessageFormat(testMessageFormat);
         }));
 
-        beforeEach(inject(function(aiLogger) {
-            logger = aiLogger;
+        beforeEach(inject(function(AiLogger) {
+            logger = AiLogger;
         }));
 
         it('should result in defined logger', function() {
@@ -45,7 +48,7 @@ describe('LoggingService', function() {
             {functionName: 'warn', level: 'WARNING', logFunction: 'warn'},
             {functionName: 'info', level: 'INFO', logFunction: 'info'},
             {functionName: 'debug', level: 'DEBUG', logFunction: 'debug'},
-            {functionName: 'trace', level: 'TRACE', logFunction: 'debug'}
+            {functionName: 'trace', level: 'TRACE', logFunction: 'trace'}
         ].forEach(function(testData) {
             describe(testData.functionName, function() {
                 it('should output formatted string', function() {
@@ -115,14 +118,14 @@ describe('LoggingService', function() {
         var logger;
         var log;
 
-        beforeEach(module('ai.public.logger', function(aiLoggerProvider) {
-            aiLoggerProvider.setStringFormatter(mockFormatter);
-            aiLoggerProvider.setMessageFormat(testMessageFormat);
-            aiLoggerProvider.setLogLevel('trace');
+        beforeEach(module('ai.public.logger', function(AiLoggerProvider) {
+            AiLoggerProvider.setStringFormatter(mockFormatter);
+            AiLoggerProvider.setMessageFormat(testMessageFormat);
+            AiLoggerProvider.setLogLevel('trace');
         }));
 
-        beforeEach(inject(function(aiLogger, $log) {
-            logger = aiLogger;
+        beforeEach(inject(function(AiLogger, $log) {
+            logger = AiLogger;
             log = $log;
             spyOn(log, 'info');
         }));
@@ -155,16 +158,15 @@ describe('LoggingService', function() {
     describe('with partial configuration without empty app name', function() {
         var logger;
 
-        beforeEach(module('ai.public.logger', function(aiLoggerProvider) {
-            aiLoggerProvider.setAppName('');
-            aiLoggerProvider.setOutputWritter(mockLog);
-            aiLoggerProvider.setStringFormatter(mockFormatter);
-            aiLoggerProvider.setMessageFormat(testMessageFormat);
-            aiLoggerProvider.setLogLevel('trace');
+        beforeEach(module('ai.public.logger', function(AiLoggerProvider) {
+            AiLoggerProvider.setAppName('');
+            AiLoggerProvider.setStringFormatter(mockFormatter);
+            AiLoggerProvider.setMessageFormat(testMessageFormat);
+            AiLoggerProvider.setLogLevel('trace');
         }));
 
-        beforeEach(inject(function(aiLogger) {
-            logger = aiLogger;
+        beforeEach(inject(function(AiLogger) {
+            logger = AiLogger;
             spyOn(mockLog, 'info');
         }));
 
@@ -197,10 +199,9 @@ describe('LoggingService', function() {
                 return _.map(arguments).join(' ');
             };
 
-            module('ai.public.logger', function(aiLoggerProvider) {
-                aiLoggerProvider.setOutputWritter(mockLog);
-                aiLoggerProvider.setMessageFormat(testMessageFormat);
-                aiLoggerProvider.setLogLevel('trace');
+            module('ai.public.logger', function(AiLoggerProvider) {
+                AiLoggerProvider.setMessageFormat(testMessageFormat);
+                AiLoggerProvider.setLogLevel('trace');
             });
         });
 
@@ -208,9 +209,9 @@ describe('LoggingService', function() {
             window.s.sprintf = originalWidowSprintf;
         });
 
-        it('should use $window.s.sprintf by default', inject(function(aiLogger) {
+        it('should use $window.s.sprintf by default', inject(function(AiLogger) {
             spyOn(mockLog, 'info');
-            aiLogger.info('foobar');
+            AiLogger.info('foobar');
 
             var loggedMessage = mockLog.info.calls.mostRecent().args[0];
             expect(_.includes(loggedMessage, 'INFO unknownApp foobar')).toBe(true);
