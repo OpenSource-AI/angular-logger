@@ -41,9 +41,10 @@
 
             var toValidLogLevel = function(logLevel) {
                 if(angular.isString(logLevel)) {
-                    var matchedKey = _.find(logLevelNames, function(logLevelName) {
-                        return logLevelName === logLevel.toUpperCase();
+                    var matchedKey = _.find(logFunctionNames, function(logLevelName) {
+                        return logLevelName === logLevel.toLowerCase();
                     });
+
                     if(angular.isDefined(matchedKey)) {
                         return loggerLogLevels[matchedKey];
                     }
