@@ -11,12 +11,13 @@ This module uses lodash [Lo-Dash](https://github.com/lodash/lodash) and that is 
 
 ## Usage
 
-### Install from brower
+### Install from browser
     bower install angular-ai-logger
 
-### Building from sour code
+### Building from source code
     git clone https://github.com/AquaticInformatics/angular-logger.git
     npm install
+    bower install
     gulp build
 
 

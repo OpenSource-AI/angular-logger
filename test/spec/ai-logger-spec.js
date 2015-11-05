@@ -70,18 +70,23 @@ describe('LoggingService', function() {
                 it('should do nothing if logger logLevel is less then that of the log function', function() {
                     if(testData.functionName !== 'error') {
                         spyOn(mockLog, testData.logFunction);
+
                         logger.setLogLevel(0);
-
                         logger[testData.functionName]('foo');
+                        expect(mockLog[testData.logFunction]).not.toHaveBeenCalled();
 
+
+                        logger.setLogLevel('error');
+                        logger[testData.functionName]('foo');
                         expect(mockLog[testData.logFunction]).not.toHaveBeenCalled();
                     }
                 });
+
             });
         });
 
         describe('setLogLevel', function() {
-            it('should throw if given invalid numer', function() {
+            it('should throw if given invalid number', function() {
                 var expectedError = new Error('Cannot set log level: log level must be >= 0 and <= 4');
 
                 expect(function() { logger.setLogLevel(-1); }).toThrow(expectedError);

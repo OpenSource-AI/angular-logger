@@ -2,3 +2,4 @@ dev_config_overrides.json
 bower_components
 temp
 node_modules
+.idea
