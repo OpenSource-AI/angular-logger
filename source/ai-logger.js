@@ -27,17 +27,17 @@
             };
 
             var toValidLogLevel = function(logLevel) {
-                if(angular.isString(logLevel)) {
+                if (angular.isString(logLevel)) {
                     var matchedKey = _.find(logFunctionNames, function(logLevelName) {
                         return logLevelName === logLevel.toLowerCase();
                     });
 
-                    if(angular.isDefined(matchedKey)) {
+                    if (angular.isDefined(matchedKey)) {
                         return loggerLogLevels[matchedKey];
                     }
                     throw new Error('Log level ' + logLevel + ' is unknown');
-                } else if(_.isFinite(logLevel)) {
-                    if(logLevel < loggerLogLevels.error || logLevel > loggerLogLevels.trace) {
+                } else if (_.isFinite(logLevel)) {
+                    if (logLevel < loggerLogLevels.error || logLevel > loggerLogLevels.trace) {
                         throw new Error('Cannot set log level: log level must be >= 0 and <= 4');
                     }
                     return logLevel;
@@ -52,7 +52,7 @@
 
                     this.getLogger = function(loggerName) {
                         var newLoggerName = String(loggerName);
-                        if(loggerConfig.loggerName.length > 0) {
+                        if (loggerConfig.loggerName.length > 0) {
                             newLoggerName = loggerConfig.loggerName + '.' + newLoggerName;
                         }
                         return new Logger(_.assign({}, loggerConfig, {loggerName: newLoggerName}));
@@ -64,11 +64,17 @@
 
                     var translateMessage = function(parameters) {
                         var withoutLogLevel = _.rest(parameters);
-                        return config.stringFormatter.apply(null, _.map(withoutLogLevel, config.translator));
+                        try {
+                            return config.stringFormatter.apply(null, _.map(withoutLogLevel, config.translator));
+                        } catch (e) {
+                            console.error('Failed to log message. Could not format string:',
+                                JSON.stringify(withoutLogLevel),
+                                JSON.stringify(e));
+                        }
                     };
 
                     var logMessage = function(logLevel) {
-                        if(config.logLevel < logLevel) { return; }
+                        if (config.logLevel < logLevel) { return; }
 
                         var fullMessage = config.stringFormatter(
                             config.messageFormat,
@@ -79,7 +85,7 @@
                         );
 
                         var outputFunctionName = logFunctionNames[logLevel];
-                        if(logLevel === loggerLogLevels.trace) {
+                        if (logLevel === loggerLogLevels.trace) {
                             outputFunctionName = _.isUndefined(config.outputWritter[outputFunctionName]) ?
                                 logFunctionNames[loggerLogLevels.debug] :
                                 logFunctionNames[logLevel];
@@ -92,6 +98,7 @@
                         self[logFunctionName] = _.bind(logMessage, self, indexMatchingLogLevel);
                     });
                 }
+
                 return Logger;
             }());
 
@@ -115,7 +122,7 @@
                     messageFormat = formattingPattern;
                 },
                 $get: function($log, $window) {
-                    if(_.isUndefined(stringFormatter)) {
+                    if (_.isUndefined(stringFormatter)) {
                         stringFormatter = $window.s.sprintf;
                     }
                     return new Logger({

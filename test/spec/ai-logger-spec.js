@@ -1,11 +1,11 @@
 describe('LoggingService', function() {
     'use strict';
     var mockLog = {
-        error: function(){},
-        warn: function(){},
-        info: function(){},
-        debug: function(){},
-        trace: function(){}
+        error: function() {},
+        warn: function() {},
+        info: function() {},
+        debug: function() {},
+        trace: function() {}
     };
     var testTimeStamp = '2015-01-01 11:00:00 (Unicorn Time)';
     var testMessageFormat = 'unicornFormat';
@@ -44,7 +44,7 @@ describe('LoggingService', function() {
         });
 
         [
-            {functionName: 'error', level:'ERROR', logFunction: 'error'},
+            {functionName: 'error', level: 'ERROR', logFunction: 'error'},
             {functionName: 'warn', level: 'WARNING', logFunction: 'warn'},
             {functionName: 'info', level: 'INFO', logFunction: 'info'},
             {functionName: 'debug', level: 'DEBUG', logFunction: 'debug'},
@@ -68,7 +68,7 @@ describe('LoggingService', function() {
                 });
 
                 it('should do nothing if logger logLevel is less then that of the log function', function() {
-                    if(testData.functionName !== 'error') {
+                    if (testData.functionName !== 'error') {
                         spyOn(mockLog, testData.logFunction);
 
                         logger.setLogLevel(0);
@@ -135,7 +135,7 @@ describe('LoggingService', function() {
             spyOn(log, 'info');
         }));
 
-        it('should use default unknownApp name', function(){
+        it('should use default unknownApp name', function() {
             logger.info('bam');
 
             var loggedMessage = log.info.calls.mostRecent().args[0];
@@ -143,7 +143,7 @@ describe('LoggingService', function() {
             expect(_.includes(loggedMessage, 'unknownApp')).toBe(true);
         });
 
-        it('should use default noop translator', function(){
+        it('should use default noop translator', function() {
             logger.info('bim');
 
             var loggedMessage = log.info.calls.mostRecent().args[0];
@@ -151,7 +151,7 @@ describe('LoggingService', function() {
             expect(_.includes(loggedMessage, 'unknownApp bim')).toBe(true);
         });
 
-        it('should use default timeStampGenerator', function(){
+        it('should use default timeStampGenerator', function() {
             logger.info('baz');
 
             var loggedMessage = log.info.calls.mostRecent().args[0];
@@ -175,7 +175,7 @@ describe('LoggingService', function() {
             spyOn(mockLog, 'info');
         }));
 
-        it('should not include app name in the log message', function(){
+        it('should not include app name in the log message', function() {
             logger.info('bam');
 
             var loggedMessage = mockLog.info.calls.mostRecent().args[0];
@@ -221,5 +221,34 @@ describe('LoggingService', function() {
             var loggedMessage = mockLog.info.calls.mostRecent().args[0];
             expect(_.includes(loggedMessage, 'INFO unknownApp foobar')).toBe(true);
         }));
+
+    });
+
+    describe('with custom stringFormatter', function() {
+
+        beforeEach(function() {
+            module('ai.public.logger', function(AiLoggerProvider) {
+                AiLoggerProvider.setStringFormatter(function() {
+                    throw new Error('Mock error');
+                });
+                AiLoggerProvider.setLogLevel('trace');
+            });
+        });
+
+        it('should log an error if string formatting fails', inject(function(AiLogger) {
+            var originalConsoleError = console.error;
+            spyOn(console, 'error');
+
+            expect(function() {
+                AiLogger.info('beep');
+            }).toThrowError('Mock error');
+            expect(console.error).toHaveBeenCalledWith(
+                'Failed to log message. Could not format string:',
+                '["beep"]',
+                '{}');
+
+            console.error = originalConsoleError;
+        }));
+
     });
 });

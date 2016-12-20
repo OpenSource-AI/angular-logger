@@ -52,15 +52,19 @@
                     var timeoutId;
                     var $http;
 
-                    this.send = function() {
-                        if(_.isUndefined(config.serverPostEndPoint)) {
-                            console.log('Cannot send log messages to unknown server end point.  ' +
-                                'Check AiServerLoggerProvider configuration.');
-                            return;
+                    var postToServer = function() {
+                        var payload = _.take(queue, config.queueSize);
+                        queue = _.slice(queue, config.queueSize);
+
+                        if(_.isUndefined($http)) {
+                            $http = config.injector.get('$http');
                         }
-                        var dto = transformParameters.apply(null, arguments);
-                        queue.push(dto);
-                        processQueue();
+                        $http({
+                            method: 'POST',
+                            url: config.serverPostEndPoint,
+                            headers: config.headers,
+                            data: payload
+                        });
                     };
 
                     var processQueue = function() {
@@ -79,19 +83,15 @@
                         }, config.postToServerDelay);
                     };
 
-                    var postToServer = function() {
-                        var payload = _.take(queue, config.queueSize);
-                        queue = _.slice(queue, config.queueSize);
-
-                        if(_.isUndefined($http)) {
-                            $http = config.injector.get('$http');
+                    this.send = function() {
+                        if(_.isUndefined(config.serverPostEndPoint)) {
+                            console.log('Cannot send log messages to unknown server end point.  ' +
+                                'Check AiServerLoggerProvider configuration.');
+                            return;
                         }
-                        $http({
-                            method: 'POST',
-                            url: config.serverPostEndPoint,
-                            headers: config.headers,
-                            data: payload
-                        });
+                        var dto = transformParameters.apply(null, arguments);
+                        queue.push(dto);
+                        processQueue();
                     };
                 }
 
