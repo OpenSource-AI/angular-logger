@@ -9,6 +9,7 @@ describe('LoggingService', function() {
     };
     var testTimeStamp = '2015-01-01 11:00:00 (Unicorn Time)';
     var testMessageFormat = 'unicornFormat';
+    // this is a test change
     var testApp = 'testApp';
     var mockTranslator = function(value) { return 't:' + value; };
     var mockFormatter = function() { return [].concat(_.map(arguments)).join(' '); };
