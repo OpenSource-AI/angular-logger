@@ -1,18 +1,14 @@
 sudo: false
 language: node_js
-cache:
-  directories:
-    - node_modules
-    - bower_components
 branches:
   only:
       - master
 notifications:
   email: false
 node_js:
-  - iojs
+  - "6"
 before_install:
-  - npm i -g npm@^2.0.0
+  - npm i -g npm@3
   - npm i -g bower
   - bower install
 before_script:

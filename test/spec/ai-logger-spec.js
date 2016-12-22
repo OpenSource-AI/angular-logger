@@ -242,10 +242,13 @@ describe('LoggingService', function() {
             expect(function() {
                 AiLogger.info('beep');
             }).toThrowError('Mock error');
-            expect(console.error).toHaveBeenCalledWith(
-                'Failed to log message. Could not format string:',
-                '["beep"]',
-                '{}');
+
+
+            expect(console.error).toHaveBeenCalled();
+            var firstArgument = console.error.calls.argsFor(0)[0];
+            var secondArgument = console.error.calls.argsFor(0)[1];
+            expect(firstArgument).toBe('Failed to log message. Could not format string:');
+            expect(secondArgument).toBe('["beep"]');
 
             console.error = originalConsoleError;
         }));
