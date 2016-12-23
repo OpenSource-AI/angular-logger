@@ -5,7 +5,6 @@
     var gulp = require('gulp');
     var gulpUtil = require('gulp-util');
     var del = require('del');
-    var karma = require('gulp-karma');
     var coverageEnforcer = require('gulp-istanbul-enforcer');
     var jshint = require('gulp-jshint');
     var jshintStylish = require('jshint-stylish');
@@ -17,6 +16,7 @@
     var concat = require('gulp-concat');
     var header = require('gulp-header');
     var fs = require('fs');
+    var karma = require('gulp-karma');
 
     gulp.task('clean', function(deleteDone) {
         del.sync([
@@ -68,7 +68,7 @@
     gulp.task('build', ['clean'], function() {
         config.build.minifyCode = true;
         config.build.failOnStyleErrors = true;
-        config.karma.browsers = ['PhantomJs'];
+        config.karma.browsers = ['PhantomJS'];
         config.karma.reporters = ['progress', 'coverage'];
         config.karma.captureTimeout = 60000;
         gulp.run('compile');
