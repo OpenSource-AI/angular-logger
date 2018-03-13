@@ -63,7 +63,7 @@
                     };
 
                     var translateMessage = function(parameters) {
-                        var withoutLogLevel = _.rest(parameters);
+                        var withoutLogLevel = _.tail(parameters);
                         try {
                             return config.stringFormatter.apply(null, _.map(withoutLogLevel, config.translator));
                         } catch (e) {

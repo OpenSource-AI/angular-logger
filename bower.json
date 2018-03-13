@@ -9,7 +9,7 @@
   "main": ["./dist/ai-logger.min.js"],
   "dependencies": {
     "angular": ">=1.2.0",
-    "lodash": "3.x",
+    "lodash": "4.x",
     "underscore.string": ">3.0.0"
   },
   "devDependencies": {
